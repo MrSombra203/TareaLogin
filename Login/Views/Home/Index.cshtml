@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Página Principal";
+}
+
+<div class="text-center mt-5">
+    <div class="alert alert-success shadow-sm">
+        <h4 class="alert-heading">
+            <i class="bi bi-check-circle-fill"></i> ¡Bienvenido!
+        </h4>
+        <p class="mb-0">
+            Has iniciado sesión como:
+            <strong>@ViewBag.NombreCompleto</strong>
+            (<code>@ViewBag.NombreUsuario</code>)
+        </p>
+    </div>
+
+    <div class="card shadow mt-4">
+        <div class="card-body p-5">
+            <i class="bi bi-shield-check text-success" style="font-size: 5rem;"></i>
+            <h1 class="display-4 mt-3">Área Protegida</h1>
+            <p class="lead">
+                Esta página solo es accesible para usuarios autenticados.
+            </p>
+            <hr>
+            <p>No puedes acceder sin iniciar sesión.</p>
+
+            <div class="mt-4">
+                <a asp-controller="Auth" asp-action="Logout" class="btn btn-danger btn-lg">
+                    <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
