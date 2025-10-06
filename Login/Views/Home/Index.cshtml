@@ -3,12 +3,12 @@
 }
 
 <div class="text-center mt-5">
-    <div class="alert alert-success shadow-sm">
+    <div class="alert alert-success shadow-sm" role="alert">
         <h4 class="alert-heading">
             <i class="bi bi-check-circle-fill"></i> ¡Bienvenido!
         </h4>
         <p class="mb-0">
-            Has iniciado sesión como:
+            Has iniciado sesión correctamente como:
             <strong>@ViewBag.NombreCompleto</strong>
             (<code>@ViewBag.NombreUsuario</code>)
         </p>
@@ -18,16 +18,72 @@
         <div class="card-body p-5">
             <i class="bi bi-shield-check text-success" style="font-size: 5rem;"></i>
             <h1 class="display-4 mt-3">Área Protegida</h1>
-            <p class="lead">
+            <p class="lead text-muted">
                 Esta página solo es accesible para usuarios autenticados.
             </p>
-            <hr>
-            <p>No puedes acceder sin iniciar sesión.</p>
+            <hr class="my-4">
+            <p>
+                No puedes acceder a esta sección sin haber iniciado sesión correctamente.
+            </p>
 
             <div class="mt-4">
+                <a asp-controller="Productos" asp-action="Index" class="btn btn-primary btn-lg me-2">
+                    <i class="bi bi-box-seam"></i> Gestionar Productos
+                </a>
                 <a asp-controller="Auth" asp-action="Logout" class="btn btn-danger btn-lg">
                     <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
                 </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6 mb-3">
+            <div class="card h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5><i class="bi bi-info-circle"></i> Información de Sesión</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong>Usuario:</strong> @ViewBag.NombreUsuario
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Nombre Completo:</strong> @ViewBag.NombreCompleto
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Estado:</strong>
+                            <span class="badge bg-success">Sesión Activa</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="card h-100">
+                <div class="card-header bg-info text-white">
+                    <h5><i class="bi bi-list-check"></i> Funcionalidades</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <i class="bi bi-check-circle text-success"></i>
+                            Sistema de Login
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-check-circle text-success"></i>
+                            Protección de Rutas
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-check-circle text-success"></i>
+                            CRUD de Productos
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-check-circle text-success"></i>
+                            Gestión de Sesiones
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
