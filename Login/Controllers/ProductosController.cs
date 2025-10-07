@@ -4,10 +4,9 @@ using Login.Filters;
 
 namespace Login.Controllers
 {
-    [AuthFilter] // IMPORTANTE: Proteger todo el controlador
+    [AuthFilter] 
     public class ProductosController : Controller
     {
-        // Simulación de base de datos en memoria
         private static List<Producto> productos = new List<Producto>
         {
             new Producto { Id = 1, Nombre = "Laptop HP", Descripcion = "Laptop HP 15.6 pulgadas", Precio = 899.99m, Stock = 10, FechaCreacion = DateTime.Now.AddDays(-30) },
@@ -17,16 +16,13 @@ namespace Login.Controllers
             new Producto { Id = 5, Nombre = "Webcam Logitech", Descripcion = "Webcam HD 1080p", Precio = 79.99m, Stock = 25, FechaCreacion = DateTime.Now.AddDays(-5) }
         };
 
-        // Variable para generar IDs únicos
         private static int siguienteId = 6;
 
-        // GET: Productos (LISTAR - READ)
         public IActionResult Index()
         {
             return View(productos.OrderByDescending(p => p.FechaCreacion).ToList());
         }
 
-        // GET: Productos/Details/5 (DETALLES - READ)
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -44,13 +40,11 @@ namespace Login.Controllers
             return View(producto);
         }
 
-        // GET: Productos/Create (MOSTRAR FORMULARIO - CREATE)
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Productos/Create (GUARDAR - CREATE)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Producto producto)
@@ -69,7 +63,6 @@ namespace Login.Controllers
             return View(producto);
         }
 
-        // GET: Productos/Edit/5 (MOSTRAR FORMULARIO - UPDATE)
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -87,7 +80,6 @@ namespace Login.Controllers
             return View(producto);
         }
 
-        // POST: Productos/Edit/5 (ACTUALIZAR - UPDATE)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Producto producto)
@@ -106,7 +98,6 @@ namespace Login.Controllers
                     return NotFound();
                 }
 
-                // Actualizar propiedades
                 productoExistente.Nombre = producto.Nombre;
                 productoExistente.Descripcion = producto.Descripcion;
                 productoExistente.Precio = producto.Precio;
@@ -121,7 +112,6 @@ namespace Login.Controllers
             return View(producto);
         }
 
-        // GET: Productos/Delete/5 (CONFIRMAR - DELETE)
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -139,7 +129,6 @@ namespace Login.Controllers
             return View(producto);
         }
 
-        // POST: Productos/Delete/5 (ELIMINAR - DELETE)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
