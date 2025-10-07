@@ -39,7 +39,6 @@
                         </li>
                     </ul>
 
-                    @* Mostrar usuario y botón de logout si hay sesión activa *@
                     @if (!string.IsNullOrEmpty(Context.Session.GetString("UsuarioId")))
                     {
                         <ul class="navbar-nav">
