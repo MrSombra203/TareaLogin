@@ -5,11 +5,45 @@ namespace Login.Controllers
 {
     public class AuthController : Controller
     {
-        private static List<Usuario> usuarios = new List<Usuario>
+        
+        public static List<Usuario> usuarios = new List<Usuario>
         {
-            new Usuario { Id = 1, NombreUsuario = "admin", Contraseña = "123456", NombreCompleto = "Administrador" },
-            new Usuario { Id = 2, NombreUsuario = "usuario", Contraseña = "pass123", NombreCompleto = "Usuario Normal" }
+            new Usuario
+            {
+                Id = 1,
+                NombreUsuario = "admin",
+                Contraseña = "123456",
+                NombreCompleto = "Administrador del Sistema",
+                Email = "admin@sistema.com",
+                Rol = "Administrador",
+                FechaRegistro = DateTime.Now.AddMonths(-6),
+                Activo = true
+            },
+            new Usuario
+            {
+                Id = 2,
+                NombreUsuario = "usuario",
+                Contraseña = "pass123",
+                NombreCompleto = "Usuario Normal",
+                Email = "usuario@sistema.com",
+                Rol = "Usuario",
+                FechaRegistro = DateTime.Now.AddMonths(-3),
+                Activo = true
+            },
+            new Usuario
+            {
+                Id = 3,
+                NombreUsuario = "maria",
+                Contraseña = "maria123",
+                NombreCompleto = "María García",
+                Email = "maria@sistema.com",
+                Rol = "Usuario",
+                FechaRegistro = DateTime.Now.AddMonths(-1),
+                Activo = true
+            }
         };
+
+        public static int siguienteId = 4;
 
         [HttpGet]
         public IActionResult Login()

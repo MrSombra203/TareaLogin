@@ -1,18 +1,18 @@
-﻿@model IEnumerable<Login.Models.Producto>
+﻿@model IEnumerable<Login.Models.Usuario>
 
 @{
-    ViewData["Title"] = "Gestión de Productos";
+    ViewData["Title"] = "Administración de Usuarios";
 }
 
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>
-            <i class="bi bi-box-seam-fill text-primary"></i>
-            Gestión de Productos
+            <i class="bi bi-people-fill text-primary"></i>
+            Administración de Usuarios
         </h2>
         <div>
             <a asp-action="Create" class="btn btn-success btn-lg">
-                <i class="bi bi-plus-circle"></i> Nuevo Producto
+                <i class="bi bi-person-plus"></i> Nuevo Usuario
             </a>
         </div>
     </div>
@@ -29,7 +29,7 @@
     <div class="card shadow-lg">
         <div class="card-header bg-primary text-white">
             <h5 class="mb-0">
-                <i class="bi bi-list-ul"></i> Lista de Productos
+                <i class="bi bi-list-ul"></i> Lista de Usuarios
             </h5>
         </div>
         <div class="card-body p-0">
@@ -40,49 +40,59 @@
                         <thead class="table-dark">
                             <tr>
                                 <th style="width: 5%;">ID</th>
-                                <th style="width: 25%;">Nombre</th>
-                                <th style="width: 30%;">Descripción</th>
-                                <th style="width: 10%;">Precio</th>
-                                <th style="width: 10%;">Stock</th>
-                                <th style="width: 15%;">Fecha</th>
+                                <th style="width: 15%;">Usuario</th>
+                                <th style="width: 20%;">Nombre Completo</th>
+                                <th style="width: 20%;">Email</th>
+                                <th style="width: 10%;">Rol</th>
+                                <th style="width: 10%;">Estado</th>
+                                <th style="width: 10%;">Fecha</th>
                                 <th style="width: 15%;" class="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr>
+                                <tr class="@(item.Activo ? "" : "table-secondary")">
                                     <td class="fw-bold">#@item.Id</td>
-                                    <td>@item.Nombre</td>
                                     <td>
-                                        @if (string.IsNullOrEmpty(item.Descripcion))
+                                        <i class="bi bi-person-circle"></i>
+                                        @item.NombreUsuario
+                                    </td>
+                                    <td>@item.NombreCompleto</td>
+                                    <td>
+                                        <i class="bi bi-envelope"></i>
+                                        @item.Email
+                                    </td>
+                                    <td>
+                                        @if (item.Rol == "Administrador")
                                         {
-                                            <span class="text-muted fst-italic">Sin descripción</span>
+                                            <span class="badge bg-danger">
+                                                <i class="bi bi-shield-fill"></i> @item.Rol
+                                            </span>
                                         }
                                         else
                                         {
-                                            @item.Descripcion
+                                            <span class="badge bg-info">
+                                                <i class="bi bi-person"></i> @item.Rol
+                                            </span>
                                         }
-                                    </td>
-                                    <td class="fw-bold text-success">
-                                        $@item.Precio.ToString("N2")
                                     </td>
                                     <td>
-                                        @if (item.Stock == 0)
+                                        @if (item.Activo)
                                         {
-                                            <span class="badge bg-danger">Agotado</span>
-                                        }
-                                        else if (item.Stock <= 10)
-                                        {
-                                            <span class="badge bg-warning text-dark">@item.Stock</span>
+                                            <span class="badge bg-success">
+                                                <i class="bi bi-check-circle"></i> Activo
+                                            </span>
                                         }
                                         else
                                         {
-                                            <span class="badge bg-success">@item.Stock</span>
+                                            <span class="badge bg-secondary">
+                                                <i class="bi bi-x-circle"></i> Inactivo
+                                            </span>
                                         }
                                     </td>
                                     <td class="text-muted small">
-                                        @item.FechaCreacion.ToString("dd/MM/yyyy")
+                                        @item.FechaRegistro.ToString("dd/MM/yyyy")
                                     </td>
                                     <td class="text-center">
                                         <div class="btn-group" role="group">
@@ -94,10 +104,13 @@
                                                class="btn btn-warning btn-sm" title="Editar">
                                                 <i class="bi bi-pencil"></i>
                                             </a>
-                                            <a asp-action="Delete" asp-route-id="@item.Id"
-                                               class="btn btn-danger btn-sm" title="Eliminar">
-                                                <i class="bi bi-trash"></i>
-                                            </a>
+                                            @if (item.Id != 1)
+                                            {
+                                                <a asp-action="Delete" asp-route-id="@item.Id"
+                                                   class="btn btn-danger btn-sm" title="Eliminar">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            }
                                         </div>
                                     </td>
                                 </tr>
@@ -109,18 +122,17 @@
             else
             {
                 <div class="text-center p-5">
-                    <i class="bi bi-inbox" style="font-size: 4rem; color: #ccc;"></i>
-                    <p class="text-muted mt-3">No hay productos registrados</p>
-                    <a asp-action="Create" class="btn btn-primary">
-                        <i class="bi bi-plus-circle"></i> Crear Primer Producto
-                    </a>
+                    <i class="bi bi-people" style="font-size: 4rem; color: #ccc;"></i>
+                    <p class="text-muted mt-3">No hay usuarios registrados</p>
                 </div>
             }
         </div>
         @if (Model.Any())
         {
             <div class="card-footer text-muted">
-                <i class="bi bi-info-circle"></i> Total de productos: <strong>@Model.Count()</strong>
+                <i class="bi bi-info-circle"></i> Total de usuarios: <strong>@Model.Count()</strong>
+                | Activos: <strong>@Model.Count(u => u.Activo)</strong>
+                | Inactivos: <strong>@Model.Count(u => !u.Activo)</strong>
             </div>
         }
     </div>
